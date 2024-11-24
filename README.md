@@ -1,6 +1,5 @@
 # Day 1: 69 Days of Python
 
-## Repository Name: `69DaysOfPython-Day1`
 
 ### **Overview**
 This repository contains the foundational code and concepts covered on **Day 1** of the "69 Days of Python" journey. It includes examples and practice exercises for Python syntax, indentation, variables, comments, and more.
