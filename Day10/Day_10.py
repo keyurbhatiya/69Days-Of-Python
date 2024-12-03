@@ -1,90 +1,76 @@
 ################################## Day 10: 69 Days of Python #####################################
 
-# Python Try Except
-'''
-The try block lets you test a block of code for errors.
-
-The except block lets you handle the error.
-
-The else block lets you execute code when there is no error.
-
-The finally block lets you execute code, regardless of the result of the try- and except blocks.
-'''
+# Python Try-Except
+"""
+- `try` block tests a block of code for errors.
+- `except` block handles the error.
+- `else` block executes code if no errors occur.
+- `finally` block executes code regardless of the try-except result.
+"""
 
 # Exception Handling
 try:
-  print(x)
-except:
-  print("An exception occurred") # This statement will raise an error, because x is not defined
+    print(x)
+except Exception as e:
+    print(f"An exception occurred: {e}")
 
-
-# Many Exceptions
+# Handling Specific Exceptions
 try:
-  print(x)
+    print(x)
 except NameError:
-  print("Variable x is not defined")
+    print("Variable 'x' is not defined")
 except:
-  print("Something else went wrong")
+    print("Something else went wrong")
 
-# Else
+# Else Clause
 try:
-  print("Hello")
+    print("Hello")
 except:
-  print("Something went wrong")
+    print("Something went wrong")
 else:
-  print("Nothing went wrong")
+    print("Nothing went wrong")
 
-# Finally
+# Finally Clause
 try:
-  print("Hey!")
+    print("Hey!")
 except:
-  print("Something went wrong")
+    print("Something went wrong")
 finally:
-  print("The 'try except' is finished")
+    print("The 'try except' block is finished")
 
-
-# Example
+# Nested Try-Except Example
 try:
-  f = open("demofile.txt")
-  try:
-    f.write("Lorum Ipsum")
-  except:
-    print("Something went wrong when writing to the file")
-  finally:
-    f.close()
-except:
-  print("Something went wrong when opening the file")
-
+    f = open("demofile.txt")
+    try:
+        f.write("Lorem Ipsum")
+    except Exception as e:
+        print(f"Error writing to the file: {e}")
+    finally:
+        f.close()
+except Exception as e:
+    print(f"Error opening the file: {e}")
 
 # Python User Input
-'''
-Python allows for user input.
-
-That means we are able to ask the user for input.
-
-The method is a bit different in Python 3.6 than Python 2.7.
-
-Python 3.6 uses the input() method.
-
-Python 2.7 uses the raw_input() method.
-'''
-
-# Python 3.6
-''' username = input("Enter username:")
-print("Username is: " + username) '''
-
-#Python 2.7
-''' username = raw_input("Enter username:")
-print("Username is: " + username) '''
+"""
+- Use `input()` for user input in Python 3.
+- Note: Wrap input processing in `try` blocks to handle unexpected input.
+"""
+# Uncomment the code below to test user input.
+# username = input("Enter username: ")
+# print("Username is:", username)
 
 # Python String Formatting
-# format()
+"""
+- Use `format()` or f-strings for formatting strings.
+- f-strings (introduced in Python 3.6) are concise and readable.
+"""
 
+# Using format()
 age = 20
 txt = "My name is Keyur, I am {}"
 print(txt.format(age))
 
-# F-Strings
+# Using f-Strings
 name = "Keyur"
 txt = f"Python Tutorial by {name}"
 print(txt)
@@ -95,33 +81,21 @@ txt = f"The price is {price} INR"
 print(txt)
 
 # Multiple Values
-quantity = 3
-itemno = 567
-price = 49
+quantity, itemno, price = 3, 567, 49
 myorder = "I want {} pieces of item number {} for {:.2f} INR."
 print(myorder.format(quantity, itemno, price))
 
-# Index Numbers
-quantity = 3
-itemno = 567
-price = 49
+# Using Index Numbers
 myorder = "I want {0} pieces of item number {1} for {2:.2f} INR."
 print(myorder.format(quantity, itemno, price))
 
 # Named Indexes
-quantity = 3
-itemno = 567
-price = 49
 myorder = "I want {quantity} pieces of item number {itemno} for {price:.2f} INR."
 print(myorder.format(quantity=quantity, itemno=itemno, price=price))
 
+########################### Exercise ###########################################
+
+# Create a simple calculator program for arithmetic operations.
 
 
-
-########################### Excerices ###########################################
-
-# create a simple calculator program using Python, capable of performing arithmetic operations such as addition, 
-# subtraction, multiplication, and division.
-
-
-# Next Topic File Handling --> Day 11
+# Next Topic: File Handling --> Day 11
