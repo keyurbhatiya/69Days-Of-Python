@@ -75,10 +75,118 @@ print(myvar["day1"])
 
 print(myvar)
 
-# Load Files Into a DataFrame
+# Read CSV Files
 import pandas as pd
-import os
 
-df = pd.read_csv("project_data.csv")
+# df = pd.read_csv("Day14/project_data.csv")
 
-print(df)
+print(df.to_string()) 
+
+# max_rows
+
+import pandas as pd
+
+# df = pd.read_csv("Day14/project_data.csv", max_rows=5)
+
+print(pd.options.display.max_rows)
+
+
+# Read JSON Files
+import pandas as pd
+
+# df = pd.read_json("Day14/projects.json")
+
+print(df.to_string())
+
+# Analyzing DataFrames
+import pandas as pd
+import numpy as np
+
+# df = pd.read_csv("Day14/project_data.csv")
+print(df.head())
+
+# Empty Cells
+# Remove Rows
+
+import pandas as pd
+
+# df = pd.read_csv("Day14/project_data.csv")
+
+new_df = df.dropna()
+
+print(new_df.to_string())
+
+# Replace Empty Values
+
+import pandas as pd
+
+# df = pd.read_csv("Day14/project_data.csv")
+
+df.fillna(130, inplace = True)
+
+print(df.to_string())
+
+# Convert Into a Correct Format
+
+import pandas as pd
+
+# df = pd.read_csv("Day14/project_data.csv")
+
+# df["Date"] = pd.to_datetime(df["submission_datetime"])
+
+print(df.to_string())
+
+# Replacing Values
+
+import pandas as pd
+import numpy as np
+
+# df = pd.read_csv("Day14/project_data.csv")
+
+
+df.loc[7, 'Duration'] = 45
+
+print(df.to_string())
+
+# Removing Duplicates
+
+import pandas as pd
+
+df = pd.read_csv("Day14/data.csv")
+df.drop_duplicates(inplace=True)
+df.corr()
+print(df.to_string())
+
+
+# Plotting
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("Day14/data.csv")
+
+# df.plot()
+
+# plt.show()
+
+# Scatter Plot
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('Day14/data.csv')
+
+df.plot(kind = 'scatter', x = 'Duration', y = 'Calories')
+
+# plt.show()
+
+# Histogram
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('Day14/data.csv')
+
+df.plot(kind = 'hist', x = 'Duration')
+
+plt.show()
+
+''' Next Topic SciPy ---> Day_15 '''
