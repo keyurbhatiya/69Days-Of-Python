@@ -81,3 +81,52 @@ Out[20]: <QuerySet [{'id': 1, 'firstname': 'Emil', 'lastname': 'Refsnes'}, {'id'
 In [21]:
 '''
 
+# Django Model and Data Management Tutorial
+
+# Step 1: Update the Member Model
+# File: members/models.py
+from django.db import models
+
+class Member(models.Model):
+    firstname = models.CharField(max_length=255)
+    lastname = models.CharField(max_length=255)
+    phone = models.IntegerField(null=True)  # Allow NULL values for phone
+    joined_date = models.DateField(null=True)  # Allow NULL values for joined_date
+
+# Step 2: Apply Migrations
+# Run the following commands in your terminal:
+# py manage.py makemigrations members
+# py manage.py migrate
+
+# Step 3: Insert Data Using the Python Shell
+# Open the Python shell with this command:
+# py manage.py shell
+
+# Then execute the following steps in the shell:
+
+# Import the Member model
+# from members.models import Member
+
+# View all members to ensure the table exists
+# Member.objects.all().values()  # Should display existing records or an empty QuerySet
+
+# Add a phone number and joined_date to the first record
+# x = Member.objects.all()[0]  # Select the first record
+# x.phone = 5551234  # Set the phone number
+# x.joined_date = '2022-01-05'  # Set the joined date
+# x.save()  # Save the updated record
+
+# Verify the update
+# Member.objects.all().values()
+
+# Step 4: Add New Records
+# Add new records with all fields populated:
+# member1 = Member(firstname='Alice', lastname='Smith', phone=1234567890, joined_date='2023-01-15')
+# member2 = Member(firstname='Bob', lastname='Johnson', phone=9876543210, joined_date='2023-02-20')
+
+# Save the new members
+# member1.save()
+# member2.save()
+
+# Verify all records in the database
+# Member.objects.all().values()
