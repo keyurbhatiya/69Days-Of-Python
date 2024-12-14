@@ -28,3 +28,12 @@ def testing(request):
     'fruits': ['Apple', 'Banana', 'Cherry'],   
   }
   return HttpResponse(template.render(context, request))
+
+
+def testing(request):
+  mydata = Member.objects.all().values()
+  template = loader.get_template('template.html')
+  context = {
+    'mymembers': mydata,
+  }
+  return HttpResponse(template.render(context, request))
