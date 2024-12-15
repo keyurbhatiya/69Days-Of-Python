@@ -160,4 +160,4 @@ body {
 '''
 
 
-''' Next topic: Django PostgreSQL --> Day_22.py '''
+''' Next topic: Django CRUD --> Day_22.py '''
