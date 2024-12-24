@@ -59,28 +59,28 @@ app = Flask(__name__)
 
 
 # Rendering external HTML files
-# @app.route('/')  
-# def message():  
-#       return render_template('message.html')  
-# if __name__ == '__main__':  
-#    app.run(debug = True) 
+@app.route('/')  
+def message():  
+      return render_template('message.html')  
+if __name__ == '__main__':  
+   app.run(debug = True) 
 
 
 # Delimiters
 
-# @app.route('/user/<uname>')  
-# def message(uname):  
-#       return render_template('message.html',name=uname)  
-# if __name__ == '__main__':  
-#    app.run(debug = True) 
+@app.route('/user/<uname>')  
+def message(uname):  
+      return render_template('message.html',name=uname)  
+if __name__ == '__main__':  
+   app.run(debug = True) 
 
 
 # Embedding Python statements in HTML
-# @app.route('/table/<int:num>')  
-# def table(num):  
-#       return render_template('print-table.html',n=num)  
-# if __name__ == '__main__':  
-#    app.run(debug = True)  
+@app.route('/table/<int:num>')  
+def table(num):  
+      return render_template('print-table.html',n=num)  
+if __name__ == '__main__':  
+   app.run(debug = True)  
 
 
-''' NEXT TOPIC : Flask Request Objects --> Day_31.py '''
+''' NEXT TOPIC : Flask Request Objects, cookies OR Sessions --> Day_31.py '''
