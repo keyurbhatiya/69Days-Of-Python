@@ -40,7 +40,7 @@ if __name__ == '__main__':
 '''
 
 # Flask Session
-'''
+
 from flask import *  
 app = Flask(__name__)  
 app.secret_key = "abc"  
@@ -59,6 +59,6 @@ def getVariable():
   
 if __name__ == '__main__':  
     app.run(debug = True)  
-'''
+
 
 ''' NEXT TOPIC : FILE UPLOADS --> Day_32.py '''
