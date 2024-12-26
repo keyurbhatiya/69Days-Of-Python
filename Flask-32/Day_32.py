@@ -1,4 +1,4 @@
-################################## Day 31: 69 Days of Python #####################################
+################################## Day 32: 69 Days of Python #####################################
 # Flask File Uploading
 '''
 from flask import *  
@@ -108,7 +108,7 @@ if __name__ == '__main__':
 '''
 
 # Email verification in flask using OTP
-'''
+
 from flask import *  
 from flask_mail import *  
 from random import *  
@@ -148,6 +148,6 @@ def validate():
   
 if __name__ == '__main__':  
     app.run(debug = True)  
-'''
+
 
 ''' NEXT TOPIC : Flask SQLite --> Day_33.py '''
