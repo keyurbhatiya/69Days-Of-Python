@@ -21,6 +21,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Required for flash messages
 
 
+
 # Function to establish a DB connection
 def get_db_connection():
     try:
@@ -41,7 +42,6 @@ def get_db_connection():
 def home():
     return render_template('login.html')
 
-
 # Route to handle login form submission
 @app.route('/login', methods=['POST'])
 def login():
@@ -56,14 +56,9 @@ def login():
     else:
         flash('Invalid email or password. Please try again.', 'danger')
         return redirect(url_for('home'))
-    
 
-# Route to logout
-@app.route('/logout')
-def logout():
-    session.pop('user', None)
-    flash('You have been logged out.', 'info')
-    return redirect(url_for('home'))
+
+
 
 # Route for a protected dashboard page
 @app.route('/dashboard')
@@ -102,6 +97,21 @@ def dashboard():
             cursor.close()
             connection.close()
 
+
+
+# Route to logout
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('home'))
+
+
+
+
+
+    
+
 # Custom filter to format datetime
 @app.template_filter('format_datetime')
 def format_datetime(value, format='%Y-%m-%d %H:%M:%S'):
@@ -116,6 +126,9 @@ def format_datetime(value, format='%Y-%m-%d %H:%M:%S'):
             return 'Invalid Date'  # If parsing fails, return an error message
     return 'N/A'  # Return 'N/A' if the value is None or not in a valid format
 
+
+
+# Route for inserting a new member
 @app.route('/insert_member', methods=['POST'])
 def insert_member():
     try:
@@ -328,32 +341,32 @@ def edit_project(group_number):
 
 
 
-# # Route to delete a project
-# @app.route('/delete_project/<int:group_number>', methods=['POST'])
-# def delete_project(group_number):
-#     try:
-#         connection = get_db_connection()
-#         if not connection:
-#             flash('Database connection failed!', 'danger')
-#             return redirect('/')
+# Route to delete a project
+@app.route('/delete_project/<int:group_number>', methods=['POST'])
+def delete_project(group_number):
+    try:
+        connection = get_db_connection()
+        if not connection:
+            flash('Database connection failed!', 'danger')
+            return redirect('/')
 
-#         cursor = connection.cursor()
+        cursor = connection.cursor()
 
-#         cursor.execute("DELETE FROM projects WHERE group_number = %s", (group_number,))
-#         cursor.execute("DELETE FROM members WHERE group_number = %s", (group_number,))
-#         connection.commit()
-#         flash('Project deleted successfully!', 'success')
-#     except Error as e:
-#         app.logger.error(f"Error deleting project: {e}")
-#         if connection.is_connected():
-#             connection.rollback()
-#         flash('An error occurred while deleting the project.', 'danger')
-#     finally:
-#         if connection.is_connected():
-#             cursor.close()
-#             connection.close()
+        cursor.execute("DELETE FROM projects WHERE group_number = %s", (group_number,))
+        cursor.execute("DELETE FROM members WHERE group_number = %s", (group_number,))
+        connection.commit()
+        flash('Project deleted successfully!', 'success')
+    except Error as e:
+        app.logger.error(f"Error deleting project: {e}")
+        if connection.is_connected():
+            connection.rollback()
+        flash('An error occurred while deleting the project.', 'danger')
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
 
-#     return redirect('/dashboard')
+    return redirect('/dashboard')
 
 
 
@@ -397,7 +410,7 @@ def edit_project(group_number):
 
 
 
-# # Route to view members for a specific project
+# Route to view members for a specific project
 @app.route('/members/<group_number>')
 def view_members(group_number):
     connection = get_db_connection()
@@ -421,8 +434,8 @@ def view_members(group_number):
 
 
 
-# # Route to export project data
-# @app.route('/export/<format>', methods=['GET'])
+# Route to export project data
+@app.route('/export/<format>', methods=['GET'])
 def export_data(format):
     connection = None
     cursor = None
@@ -487,7 +500,7 @@ def export_data(format):
             response.headers["Content-Disposition"] = "attachment; filename=project_data.json"
             response.headers["Content-Type"] = "application/json"
             return response
-        
+
         elif format == 'pdf':
            # Create a PDF instance
              from itertools import zip_longest  # To handle lists of different lengths
@@ -542,7 +555,7 @@ def export_data(format):
         response.headers["Content-Disposition"] = "attachment; filename=projects_and_members_data.pdf"
         response.headers["Content-Type"] = "application/pdf"
         return response
-        
+
     except Exception as e:
         app.logger.error(f"Error exporting data: {e}")
         flash('An error occurred while exporting the data.', 'danger')
@@ -555,8 +568,6 @@ def export_data(format):
             cursor.close()
         if connection and connection.is_connected():
             connection.close()
-
-
 
 
 
@@ -677,7 +688,6 @@ def export_all_projects_pdf():
         flash('An unexpected error occurred during PDF export.', 'danger')
         return redirect('/dashboard')
 
-
 # Route to trigger PDF export for all projects
 @app.route('/export_all_projects_pdf')
 def export_all_projects_route():
@@ -687,6 +697,6 @@ def export_all_projects_route():
 # Run the app
 if __name__ == '__main__':
     app.run(debug=True)
-
-
+    
 '''Next Topic: Insert data or edit data --> Day_35.py'''
+'''Next Topic: export data --> Day_36.py'''
