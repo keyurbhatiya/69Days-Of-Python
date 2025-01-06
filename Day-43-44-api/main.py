@@ -40,6 +40,29 @@ def create_item(
     crud.create_item(db, schemas.ItemCreate(name=name, description=description, price=price, available=available))
     return RedirectResponse("/", status_code=302)
 
+@app.get("/update/{item_id}")
+def update_form(item_id: int, request: Request, db: Session = Depends(get_db)):
+    item = crud.get_item(db, item_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return templates.TemplateResponse("update.html", {"request": request, "item": item})
+
+@app.post("/update/{item_id}")
+def update_item(
+    item_id: int,
+    name: str = Form(...),
+    description: str = Form(...),
+    price: int = Form(...),
+    available: int = Form(...),
+    db: Session = Depends(get_db)
+):
+    crud.update_item(db, item_id, schemas.ItemUpdate(name=name, description=description, price=price, available=available))
+    return RedirectResponse("/", status_code=302)
+
+@app.get("/delete/{item_id}")
+def delete_item(item_id: int, db: Session = Depends(get_db)):
+    crud.delete_item(db, item_id)
+    return RedirectResponse("/", status_code=302)
 
 
 
