@@ -1,4 +1,5 @@
-from flaskblog import db, app  # Import db and app from your Flask app
+from flaskblog import db, app
+# from flaskblog.models import db, app 
 
 # Wrap the database creation in the application context
 with app.app_context():
