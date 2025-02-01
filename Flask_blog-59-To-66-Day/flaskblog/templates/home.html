@@ -1,27 +1,148 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="container py-4">
     {% for post in posts.items %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
-              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+    <div class="card mb-4 shadow hover-shadow transition-shadow duration-300" 
+         onmouseover="this.classList.add('shadow-lg')" 
+         onmouseout="this.classList.remove('shadow-lg')">
+        <div class="card-body">
+            <!-- Author Section with Hover Effect -->
+            <div class="d-flex align-items-center mb-3">
+                <div class="position-relative">
+                    <img src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}"
+                         class="rounded-circle me-3 border border-2 border-primary"
+                         width="60"
+                         height="60"
+                         style="transition: transform 0.3s"
+                         onmouseover="this.style.transform='scale(1.1)'"
+                         onmouseout="this.style.transform='scale(1)'">
+                </div>
+                <div>
+                    <a href="{{ url_for('user_posts', username=post.author.username) }}" 
+                       class="text-dark fw-bold text-decoration-none hover-underline">
+                        {{ post.author.username }}
+                    </a>
+                    <div class="text-muted small">
+                        <i class="fas fa-calendar-alt me-1"></i>
+                        {{ post.date_posted.strftime('%B %d, %Y') }}
+                    </div>
+                </div>
             </div>
-            <h2><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-          </div>
-        </article>
+
+            <!-- Post Content -->
+            <div class="post-content">
+                <h4 class="mb-3">
+                    <a href="{{ url_for('post', post_id=post.id) }}" 
+                       class="text-decoration-none text-primary hover-text-dark"
+                       style="transition: color 0.3s">
+                        {{ post.title }}
+                    </a>
+                </h4>
+                <p class="text-muted mb-3">
+                    {{ post.content[:200] }}{% if post.content|length > 200 %}
+                    <span class="fade">...</span>
+                    {% endif %}
+                </p>
+                
+                <!-- Interactive Footer -->
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{ url_for('post', post_id=post.id) }}" 
+                       class="btn btn-outline-primary btn-sm hover-lift"
+                       style="transition: transform 0.2s">
+                        Read More <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                    <div class="post-stats">
+                        <span class="me-3">
+                            <i class="far fa-heart"></i> 
+                            <span class="likes-count">0</span>
+                        </span>
+                        <span>
+                            <i class="far fa-comment"></i> 
+                            <span class="comments-count">0</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endfor %}
-    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-      {% if page_num %}
-        {% if posts.page == page_num %}
-          <a class="btn btn-info mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
-        {% else %}
-          <a class="btn btn-outline-info mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
-        {% endif %}
-      {% else %}
-        ...
-      {% endif %}
-    {% endfor %}
+
+    <!-- Enhanced Pagination -->
+    <nav aria-label="Page navigation" class="mt-5">
+        <ul class="pagination justify-content-center">
+            {% if posts.has_prev %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('home', page=posts.prev_num) }}">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            </li>
+            {% endif %}
+            
+            {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                {% if page_num %}
+                    <li class="page-item {% if posts.page == page_num %}active{% endif %}">
+                        <a class="page-link" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if posts.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('home', page=posts.next_num) }}">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<!-- Add this CSS to your stylesheet -->
+<style>
+    .hover-shadow {
+        transition: box-shadow 0.3s ease-in-out;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-2px);
+    }
+    
+    .hover-text-dark:hover {
+        color: #2c3e50 !important;
+    }
+    
+    .hover-underline:hover {
+        text-decoration: underline !important;
+    }
+    
+    .post-stats {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    
+    .post-stats i {
+        transition: color 0.3s;
+    }
+    
+    .post-stats i:hover {
+        color: #0d6efd;
+        cursor: pointer;
+    }
+    
+    .fade {
+        opacity: 0.7;
+    }
+    
+    .page-link {
+        border-radius: 5px;
+        margin: 0 2px;
+    }
+    
+    .page-link:hover {
+        background-color: #0d6efd;
+        color: white;
+    }
+</style>
 {% endblock content %}
